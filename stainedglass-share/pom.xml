@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.alfresco.integrations.google</groupId>
+    <artifactId>stainedglass-share</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <name>stainedglass-share AMP project</name>
+    <packaging>amp</packaging>
+    <description>Manages the lifecycle of the stainedglass-share AMP (Alfresco Module Package)</description>
+
+    <parent>
+        <groupId>org.alfresco.integrations.google</groupId>
+        <artifactId>stainedglass</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <!-- 
+       | SDK properties have sensible defaults in the SDK parent,
+       | but you can override the properties below to use another version. 
+       | For more available properties see the alfresco-sdk-parent POM. 
+       -->
+    <properties>
+        <!-- Defines the target WAR artifactId to run this amp, only used with the -Pamp-to-war switch
+        .    | Allowed values: alfresco | share. Defaults to a repository AMP, but could point to your foundation WAR -->
+        <alfresco.client.war>share</alfresco.client.war>
+    </properties>
+</project>
