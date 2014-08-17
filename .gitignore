@@ -1,0 +1,7 @@
+target/
+stainedglass-repo/target/
+stainedglass-share/target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.next
+release.properties
