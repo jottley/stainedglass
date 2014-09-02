@@ -1,64 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <artifactId>stainedglass-repo</artifactId>
-    <name>stainedglass-repo AMP project</name>
-    <packaging>amp</packaging>
-    <description>Manages the lifecycle of the stainedglass-repo AMP (Alfresco Module Package)</description>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>stainedglass-repo</artifactId>
+	<name>stainedglass-repo AMP project</name>
+	<packaging>amp</packaging>
+	<description>Manages the lifecycle of the stainedglass-repo AMP (Alfresco Module Package)</description>
 
-    <parent>
-        <groupId>org.alfresco.integrations.google</groupId>
-        <artifactId>stainedglass</artifactId>
-        <version>1.0-SNAPSHOT</version>
-    </parent>
+	<parent>
+		<groupId>org.alfresco.integrations.google</groupId>
+		<artifactId>stainedglass</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
 
-    <!-- 
-       | SDK properties have sensible defaults in the SDK parent,
-       | but you can override the properties below to use another version. 
-       | For more available properties see the alfresco-sdk-parent POM. 
-       -->
-    <properties>
-        <!-- Defines the target WAR artifactId to run this amp, only used with the -Pamp-to-war switch
-        .    | Allowed values: alfresco | share. Defaults to a repository AMP, but could point to your foundation WAR -->
-        <alfresco.client.war>alfresco</alfresco.client.war>
-    </properties>
-    
-    <build>
-    	<pluginManagement>
-    		<plugins>
-    			<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
-    			<plugin>
-    				<groupId>org.eclipse.m2e</groupId>
-    				<artifactId>lifecycle-mapping</artifactId>
-    				<version>1.0.0</version>
-    				<configuration>
-    					<lifecycleMappingMetadata>
-    						<pluginExecutions>
-    							<pluginExecution>
-    								<pluginExecutionFilter>
-    									<groupId>
-    										org.alfresco.maven.plugin
-    									</groupId>
-    									<artifactId>
-    										alfresco-maven-plugin
-    									</artifactId>
-    									<versionRange>
-    										[1.1.1,)
-    									</versionRange>
-    									<goals>
-    										<goal>set-version</goal>
-    									</goals>
-    								</pluginExecutionFilter>
-    								<action>
-    									<ignore></ignore>
-    								</action>
-    							</pluginExecution>
-    						</pluginExecutions>
-    					</lifecycleMappingMetadata>
-    				</configuration>
-    			</plugin>
-    		</plugins>
-    	</pluginManagement>
-    </build>
+	<!-- | SDK properties have sensible defaults in the SDK parent, | but you 
+		can override the properties below to use another version. | For more available 
+		properties see the alfresco-sdk-parent POM. -->
+	<properties>
+		<!-- Defines the target WAR artifactId to run this amp, only used with 
+			the -Pamp-to-war switch . | Allowed values: alfresco | share. Defaults to 
+			a repository AMP, but could point to your foundation WAR -->
+		<alfresco.client.war>alfresco</alfresco.client.war>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>org.springframework.core</artifactId>
+			<version>3.0.5.RELEASE</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.apis</groupId>
+			<artifactId>google-api-services-mirror</artifactId>
+			<version>v1-rev61-1.19.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.api-client</groupId>
+			<artifactId>google-api-client</artifactId>
+			<version>1.18.0-rc</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.api-client</groupId>
+			<artifactId>google-api-client-jackson2</artifactId>
+			<version>1.18.0-rc</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.apis</groupId>
+			<artifactId>google-api-services-oauth2</artifactId>
+			<version>v2-rev77-1.19.0</version>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.alfresco.maven.plugin
+										</groupId>
+										<artifactId>
+											alfresco-maven-plugin
+										</artifactId>
+										<versionRange>
+											[1.1.1,)
+										</versionRange>
+										<goals>
+											<goal>set-version</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
 </project>

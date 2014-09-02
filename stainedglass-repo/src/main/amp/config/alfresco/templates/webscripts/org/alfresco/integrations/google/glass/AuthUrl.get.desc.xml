@@ -1,0 +1,10 @@
+<webscript>
+	<shortname>Build Google Glass Auth URL</shortname>
+	<description>Build Google Glass Auth URL</description>
+	<url>/googleglass/authurl?state={state}</url>
+	<lifecycle>internal</lifecycle>
+	<authentication>user</authentication>
+	<format default="json" />
+	<transaction>requiresnew</transaction>
+	<family>googleglass</family>
+</webscript>

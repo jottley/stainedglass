@@ -1,0 +1,10 @@
+<webscript>
+   <shortname>Google Glass Upload Content</shortname>
+   <description>Google Glass Upload Content</description>
+   <url>/googleglass/uploadContent?nodeRef={nodeRef}</url>
+   <lifecycle>internal</lifecycle>
+   <authentication>user</authentication>
+   <format default="json" />
+   <transaction>requiresnew</transaction>
+   <family>googleglass</family>
+</webscript>

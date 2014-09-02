@@ -1,26 +1,126 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<!--
-	Licensed to the Apache Software Foundation (ASF) under one or more
-	contributor license agreements. 
-	The ASF licenses this file to You under the Apache License, Version 2.0
-	(the "License"); you may not use this file except in compliance with
-	the License.  You may obtain a copy of the License at
-	
-	http://www.apache.org/licenses/LICENSE-2.0
-	
-	Unless required by applicable law or agreed to in writing, software
-	distributed under the License is distributed on an "AS IS" BASIS,
-	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-	See the License for the specific language governing permissions and
-	limitations under the License.
-	
--->
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor 
+	license agreements. The ASF licenses this file to You under the Apache License, 
+	Version 2.0 (the "License"); you may not use this file except in compliance 
+	with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 
+	Unless required by applicable law or agreed to in writing, software distributed 
+	under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES 
+	OR CONDITIONS OF ANY KIND, either express or implied. See the License for 
+	the specific language governing permissions and limitations under the License. -->
 
 <!DOCTYPE beans PUBLIC '-//SPRING//DTD BEAN//EN' 'http://www.springframework.org/dtd/spring-beans.dtd'>
 
-
-
 <beans>
+
+	<!-- <bean id="googleglassConnectionFactory"
+		class="org.springframework.social.google.connect.GoogleConnectionFactory">
+		<constructor-arg value="623226475468.apps.googleusercontent.com" />
+		<constructor-arg value="gFCX7B0fwLXs5FNFrhyvxZVt" />
+	</bean> -->
+
+	<!-- Googleglass Service -->
+	<bean id="GoogleGlassService" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="proxyInterfaces">
+			<value>org.alfresco.integrations.google.glass.service.GoogleGlassService</value>
+		</property>
+		<property name="target">
+			<ref bean="googleGlassService" />
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<idref bean="googleglassServiceReadTxnAdvisor" />
+				<idref bean="googleglassServiceWriteTxnAdvisor" />
+				<idref bean="AuditMethodInterceptor" />
+				<idref bean="exceptionTranslator" />
+				<idref bean="googleglassService_security" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="googleglassService_security"
+		class="org.alfresco.repo.security.permissions.impl.acegi.MethodSecurityInterceptor">
+		<property name="authenticationManager">
+			<ref bean="authenticationManager" />
+		</property>
+		<property name="accessDecisionManager">
+			<ref bean="accessDecisionManager" />
+		</property>
+		<property name="afterInvocationManager">
+			<ref bean="afterInvocationManager" />
+		</property>
+		<property name="objectDefinitionSource">
+			<value>
+				org.alfresco.integrations.google.glass.service.GoogleGlassService.isAuthenticated=ACL_ALLOW
+				org.alfresco.integrations.google.glass.service.GoogleGlassService.getAuthenticateUrl=ACL_ALLOW
+				org.alfresco.integrations.google.glass.service.GoogleGlassService.completeAuthentication=ACL_ALLOW
+				org.alfresco.integrations.google.glass.service.GoogleGlassService.sendMessage=ACL_ALLOW
+				org.alfresco.integrations.google.glass.service.GoogleGlassService.uploadContent=ACL_ALLOW
+				org.alfresco.integrations.google.glass.service.GoogleGlassService.*=ACL_DENY
+			</value>
+		</property>
+	</bean>
+
+	<bean id="googleglassServiceReadTxnAdvisor"
+		class="org.springframework.aop.support.NameMatchMethodPointcutAdvisor">
+		<property name="advice">
+			<ref bean="retryingReadTxnAdvice" />
+		</property>
+		<property name="mappedNames">
+			<list>
+				<value>isAuthenticated</value>
+				<value>sendMessage</value>
+				<value>uploadContent</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="googleglassServiceWriteTxnAdvisor"
+		class="org.springframework.aop.support.NameMatchMethodPointcutAdvisor">
+		<property name="advice">
+			<ref bean="retryingWriteTxnAdvice" />
+		</property>
+		<property name="mappedNames">
+			<list>
+				<value>completeAuthentication</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="googleGlassService"
+		class="org.alfresco.integrations.google.glass.service.GoogleGlassServiceImpl" init-method="init">
+		<property name="fileFolderService">
+			<ref bean="FileFolderService" />
+		</property>
+		<property name="oauth2CredentialsStoreService">
+			<ref bean="OAuth2CredentialsStoreService" />
+		</property>
+	</bean>
+
+	<bean id="webscript.org.alfresco.integrations.google.glass.AuthUrl.get"
+		class="org.alfresco.integrations.google.glass.webscripts.AuthUrl"
+		parent="webscript">
+		<property name="googleGlassService">
+			<ref bean="googleGlassService" />
+		</property>
+	</bean>
+
+	<bean
+		id="webscript.org.alfresco.integrations.google.glass.CompleteAuth.get"
+		class="org.alfresco.integrations.google.glass.webscripts.CompleteAuth"
+		parent="webscript">
+		<property name="googleGlassService">
+			<ref bean="googleGlassService" />
+		</property>
+	</bean>
+
+	<bean
+		id="webscript.org.alfresco.integrations.google.glass.UploadContent.post"
+		class="org.alfresco.integrations.google.glass.webscripts.UploadContent"
+		parent="webscript">
+		<property name="googleGlassService">
+			<ref bean="googleGlassService" />
+		</property>
+	</bean>
 
 </beans>
 

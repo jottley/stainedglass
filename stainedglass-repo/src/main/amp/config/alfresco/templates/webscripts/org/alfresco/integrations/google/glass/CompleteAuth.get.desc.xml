@@ -1,0 +1,10 @@
+<webscript>
+	<shortname>Complete Google Glass Auth</shortname>
+	<description>Complete Google Glass Auth</description>
+	<url>/googleglass/completeauth?access_token={access_token}</url>
+	<lifecycle>internal</lifecycle>
+	<authentication>user</authentication>
+	<format default="html" />
+	<transaction>requiresnew</transaction>
+	<family>googleglass</family>
+</webscript>
