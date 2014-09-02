@@ -1,0 +1,30 @@
+<alfresco-config>
+	<config evaluator="string-compare" condition="DocLibCustom">
+	   <dependencies>
+         <js src="/googleglass/components/documentlibrary/actions-common.js" />
+         <js src="/googleglass/components/documentlibrary/actions.js" />
+         <css src="/googleglass/components/documentlibrary/googleglass-actions.css" />
+	   </dependencies>
+	</config>
+	
+	<config evaluator="string-compare" condition="DocLibActions">
+		<actions>
+			<action id="google-glass-publish-action-link" type="javascript" icon="google-glass-publish" label="googleglass.actions.publish">
+				<param name="function">onGoogleglassActionPublish</param>
+				<evaluator>evaluator.doclib.indicator.exifMetadata</evaluator>
+			</action>
+		</actions>
+		
+		<actionGroups>
+			<actionGroup id="document-browse">
+				<action index="250" id="google-glass-publish-action-link" />
+			</actionGroup>
+			
+			<actionGroup id="document-details">
+				<action index="250" id="google-glass-publish-action-link" />
+			</actionGroup>
+		</actionGroups>	
+	</config>
+	
+	
+</alfresco-config>
